@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace CRC
+namespace crccsharp
 {
-    public class Crc
+    public class CRC
     {
         private const ushort MaskPoly16 = 0x8408;
-
-        [DllImport("crc.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern int crc_test(int A);
-
-        [DllImport("crc.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern ushort wCalcCRC16(byte[] a_ubMsg, int a_iMsgLen);
 
         public static int Test(int A)
         {
@@ -20,15 +14,15 @@ namespace CRC
 
         private static ushort Crc16(byte a_ubDataIn, ushort a_wCrc)
         {
-            byte result = 0;
+            byte Result = 0;
             byte i = 0;
 
             for (i = 8; i != 0; i--)
             {
-                result = (byte)(a_ubDataIn ^ a_wCrc);
+                Result = (byte)(a_ubDataIn ^ a_wCrc);
                 a_ubDataIn = (byte)(a_ubDataIn >> 1);
                 a_wCrc = (ushort)(a_wCrc >> 1);
-                if ((result & 0x01) != 0)
+                if ((Result & 0x01) != 0)
                 {
                     a_wCrc ^= MaskPoly16;
                 }
